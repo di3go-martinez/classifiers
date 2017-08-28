@@ -18,5 +18,5 @@ copy rclassifiers/main.r /srv/main.r
 #Ejecuto el servicio de R que ejecuta las funciones
 #TODO revisar si es necesario o dejar el default que no define pr como global
 #ENTRYPOINT ["R", "-e", "pr <<- plumber::plumb(commandArgs()[4]); pr$run(host='0.0.0.0', port=8000)"]
-copy run.sh /srv/run.sh
-entrypoint /srv/run.sh
+copy entrypoint.sh /srv/entrypoint.sh
+entrypoint /srv/entrypoint.sh
