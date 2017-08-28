@@ -3,8 +3,8 @@ cat src/filters/* src/functions/* > /tmp/main.r
 
 docker run -p 8000:8000 \
     --rm \
-    -v $(readlink -f main.r):/main.r \
+    -v /tmp/main.r:/main.r \
     -w /ops \
-    my-plumber /tmp/main.r
+    rclassifiers-dev-service /main.r
 
 
