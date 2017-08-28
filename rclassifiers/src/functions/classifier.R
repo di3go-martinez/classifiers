@@ -1,0 +1,56 @@
+#expressionAsJson es un json que serializa una matriz en la que la primera columna contiene los nombres de los genes y las demas columnas son los pacientes. Las celdas son datos de expresion.
+#Ejemplo de expressionAsJson para una matriz de 4 pacientes y 2 genes: [["KRT17","-0.36","-0.34","-0.27","-0.51"],["FOXC1","-0.36","-0.4","-0.39","-0.45"]]
+#
+#groupsAsJson nombre del sample y grupo al que pertenece. GARANTIZAR QUE VIENEN EN EL MISMO ORDEN EN QUE ESTAN EXPRESADOAS LAS COLUMNAS DE LA MATRIZ DE EXPRESION!!
+#Ejemplo de grupoAsJson para 4 pacientes:[{"sample":"sample1","grupo":1},{"sample":"sample2","grupo":2},{"sample":"sample3","grupo":2},{"sample":"sample4","grupo":2}]
+#
+#groupLabelsAsJson tiene la descripcion que el investigador le dio a cada grupo desde la GUI de bioplat al crear el clasificador desde una validacion.
+#Ejemplo de groupLabelsAsJson: [{"group":1,"descripcion":"alto riesgo. Se sugiere bla bla"},{"group":2,"descripcion":"bajo riesgo. Se sugiere blo blao"}]
+#* @post /functions
+function (id, expressionAsJson, groupsAsJson, groupLabelsAsJson){
+  library(jsonlite)
+  
+  #Se lee el json, se le saca la primera columna (la de genes) y se setea esa columna con row.names de la matriz.
+  expression<-fromJSON(expressionAsJson)
+  expression.without.gene.names.cols<-expression[,2:ncol(expression)]
+  expression.without.gene.names.cols<-apply(expression.without.gene.names.cols, 2, as.numeric)
+  row.names(expression.without.gene.names.cols)<-expression[,1]
+  
+  #Se leen los grupos. COmo viene con los nombres de columnas se lee como dataframe, con lo cual hay que convertirlo a matriz.
+  groups=fromJSON(groupsAsJson)
+  groups=groups[,2]
+  
+  #Se leen las descripciones de los grupos que tambien vienen como json.
+  group.labels=fromJSON(groupLabelsAsJson)
+
+  library(pamr)
+  exp.ordered=expression.without.gene.names.cols[ order(row.names(expression.without.gene.names.cols)), ]
+  mydata <- list(x=exp.ordered,y=factor(groups))
+  mytrain<- pamr.train(mydata)
+  saveRDS(mytrain, paste(id, ".rds", sep=""))
+  
+  
+  
+  #classify
+  
+  pr$handle("POST", paste0("/",id), function(req, res){
+    print( req$mrna)
+    print (req$id)
+    
+    library(pamr)
+    expression<-fromJSON(req$mrna)
+    expression.without.gene.names.cols<-req$mrna[,2]
+    expression.without.gene.names.cols<-as.numeric(expression.without.gene.names.cols)
+    names(expression.without.gene.names.cols)<-req$mrna[,1]
+    exp.ordered=expression.without.gene.names.cols[order(names(expression.without.gene.names.cols))]
+    new=cbind(exp.ordered,exp.ordered)
+    read=readRDS(paste(req$id, ".rds", sep=""))
+    group.predicted<-pamr.predict(read, new, threshold=1)[1]
+    return (groupLabelsAsJson[as.numeric(group.predicted),2])
+
+    
+    
+  })
+  print(pr) #imprimo todas las urls registradas
+  print(paste0("registered: ", "/",id)) #imprimo y retorno 
+}
