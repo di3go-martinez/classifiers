@@ -5,5 +5,6 @@ cp jclassifiers/build/libs/classifiers-0.0.1-SNAPSHOT.jar docker-classifiers/cla
 cp -r jclassifiers/db docker-classifiers/classifiers/
 
 #armo el script R con todas las funciones necesarias
+cp rclassifiers/src/dependencies.r docker-classifiers/rclassifiers/dependencies.r
 cat rclassifiers/src/filters/* rclassifiers/src/functions/* > docker-classifiers/rclassifiers/main.r
 
