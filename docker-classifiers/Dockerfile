@@ -13,7 +13,12 @@ expose 8080
 
 add classifiers/ /srv/classifiers/
 workdir /srv/classifiers/
- 
+
+#Configuración de R 
+
+copy rclassifiers/dependencies.r /srv/
+run Rscript /srv/dependencies.r
+
 copy rclassifiers/main.r /srv/main.r
 #Ejecuto el servicio de R que ejecuta las funciones
 #TODO revisar si es necesario o dejar el default que no define pr como global
