@@ -1,7 +1,8 @@
-#!/bin/bash -x
+#!/bin/bash 
 
 #copio jar+deps y la db
-cp jclassifiers/build/libs/classifiers-0.0.1-SNAPSHOT.jar docker-classifiers/classifiers/classifiers.jar
+jar=$(ls jclassifiers/build/libs/jclassifiers-*.jar -tr | tail -n 1)
+cp $jar docker-classifiers/classifiers/classifiers.jar
 cp -r jclassifiers/db docker-classifiers/classifiers/
 
 #armo el script R con todas las funciones necesarias
