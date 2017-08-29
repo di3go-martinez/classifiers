@@ -23,7 +23,7 @@ public class SynchronizeClassifiers implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         logger.info("Chequeando sincronización de funciones");
         for (ClassifierFunctionDescriptor fg : functions.findAll())
-            if (!rService.isOk(fg))
+            if (!rService.isFunctionAvailable(fg))
                 rService.create(fg);
     }
 
