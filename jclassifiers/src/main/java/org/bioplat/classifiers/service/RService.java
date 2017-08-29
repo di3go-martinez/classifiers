@@ -19,11 +19,11 @@ public interface RService {
      *
      * @return chequea si la función f está correctamnte generada
      */
-    boolean isOk(ClassifierFunctionDescriptor f);
+    boolean isFunctionAvailable(ClassifierFunctionDescriptor f);
 
     /**
      *
-     * evalua la función con los parámetros values
+     * evalua la función con los parámetros mrna (json)
      */
-    String eval(ClassifierFunctionDescriptor function, Map<String, Number> values);
+    String eval(ClassifierFunctionDescriptor function, String mrna);
 }

@@ -26,12 +26,15 @@ public class RServiceImpl implements RService {
     @Override
     public void create(ClassifierFunctionDescriptor f) {
         if (f.isPredefined()) {
-            logger.warn("la función " +f+" está predefinida en R");
+            logger.warn("la función " + f + " está predefinida en R");
             return;
         }
         //hace la llamada rest a r que crea una funcion y la expone dinámicamente
         try {
-            Content content = Request.Post(urlRservice() + "/functions").body(new UrlEncodedFormEntity(buildParamLis(f))).execute().returnContent();
+            Content content = Request.Post(urlRservice() + "/functions")
+                    .body(new UrlEncodedFormEntity(prepareCreationParams(f)))
+                    .execute()
+                    .returnContent();
             logger.info("Registro de la función " + f + " en R: " + content.asString());
         } catch (Exception e) {
             throw new RuntimeException("Error registrando la función en R", e);
@@ -39,61 +42,52 @@ public class RServiceImpl implements RService {
     }
 
     private String urlRservice() {
-        return  System.getProperty("rservice.url", "http://localhost:8000");
+        return System.getProperty("rservice.url", "http://localhost:8000");
     }
 
+
     /**
-     * @return false siempre
+     * @param f
+     * @return false siempre, permite la recreación ante la caída del server.
      */
+    //FIXME evaluar como identificar si ya existe la función y es la correcta
     @Override
-    public boolean isOk(ClassifierFunctionDescriptor fg) {
+    public boolean isFunctionAvailable(ClassifierFunctionDescriptor f) {
         return false;
     }
 
     @Override
-    public String eval(ClassifierFunctionDescriptor function, Map<String, Number> values) {
+    public String eval(ClassifierFunctionDescriptor function, String mrna) {
         try {
-            Content requestresult = Request.Post(urlRservice() +"/"+ function.resourceId())
-                    .body(buildParams(function , values))
+            Content requestresult = Request.Post(urlRservice() + "/" + function.resourceId())
+                    .body(prepareEvaluationParams(function, mrna))
                     .execute().returnContent();
             String result = "Resultado de la invocación a la función " + function.id() + ": " + requestresult.asString();
             logger.info(result);
             return result;
         } catch (IOException e) {
-            throw new RuntimeException("Error invocando a la función "+function, e);
+            throw new RuntimeException("Error invocando a la función " + function, e);
         }
 
     }
 
-    private HttpEntity buildParams(ClassifierFunctionDescriptor f, Map<String, Number> values) throws UnsupportedEncodingException {
+    private HttpEntity prepareEvaluationParams(ClassifierFunctionDescriptor f, String mrna) throws UnsupportedEncodingException {
         List<BasicNameValuePair> list = Lists.newArrayList();
-        list.add(new BasicNameValuePair("author", f.author()));
-
-        StringBuilder commaSeparatedGenes = new StringBuilder();
-        StringBuilder commanSeparatedExpressions = new StringBuilder();
-        for (Map.Entry<String, Number> entry: values.entrySet()) {
-            append(commaSeparatedGenes, entry.getKey());
-            append(commanSeparatedExpressions,entry.getValue());
-        }
-
-
-        list.add(new BasicNameValuePair("genes", commaSeparatedGenes.toString()));
-        list.add(new BasicNameValuePair("expressions", commanSeparatedExpressions.toString()));
+        list.add(new BasicNameValuePair("id", f.id().toString()));
+        list.add(new BasicNameValuePair("mrna", mrna));
         return new UrlEncodedFormEntity(list);
     }
 
 
-    private void append(StringBuilder str, Object value) {
-        if(!str.toString().isEmpty())
-            str.append(",");
-        str.append(value);
-    }
 
-    private List<? extends NameValuePair> buildParamLis(ClassifierFunctionDescriptor f) {
+    private List<? extends NameValuePair> prepareCreationParams(ClassifierFunctionDescriptor f) {
         List<NameValuePair> result = Lists.newArrayList();
         result.add(new BasicNameValuePair("id", f.id().toString()));
-        result.add(new BasicNameValuePair("author", f.author()));
-        result.add(new BasicNameValuePair("genes", f.genesAsString()));
+        //result.add(new BasicNameValuePair("author", f.author()));
+
+        result.add(new BasicNameValuePair("expressionAsJson", f.expressionAsJson()));
+        result.add(new BasicNameValuePair("groupsAsJson", f.groupsAsJson()));
+        result.add(new BasicNameValuePair("groupLabelsAsJson", f.groupLabelsAsJson()));
         return result;
     }
 
