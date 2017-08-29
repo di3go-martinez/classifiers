@@ -1,14 +1,13 @@
 
-#TODO read.table??
 
 #* @filter transform_parameters
-function (req, author, genes=NULL, expressions=NULL, res){
-  if (!is.null(expressions)){
-    mrna <- scan(textConnection(expressions), sep=",")
-    geneNames <- scan(textConnection(genes), what="character", sep=",")
-    names(mrna) <- geneNames
-    req$mrna <- mrna 
+function (req, id, author, mrna=NULL, res){
+  library(jsonlite)
+  if (!is.null(mrna)) {
+    m <- fromJSON(mrna)
+    req$mrna <- m
   }
+  req$id <- id
   plumber::forward()
 }
 

@@ -10,6 +10,10 @@
 function (id, expressionAsJson, groupsAsJson, groupLabelsAsJson){
   library(jsonlite)
   
+  #print(expressionAsJson)
+  #print(groupsAsJson)
+  #print(groupLabelsAsJson)
+
   #Se lee el json, se le saca la primera columna (la de genes) y se setea esa columna con row.names de la matriz.
   expression<-fromJSON(expressionAsJson)
   expression.without.gene.names.cols<-expression[,2:ncol(expression)]
@@ -34,19 +38,17 @@ function (id, expressionAsJson, groupsAsJson, groupLabelsAsJson){
   #classify
   
   pr$handle("POST", paste0("/",id), function(req, res){
-    print( req$mrna)
-    print (req$id)
     
     library(pamr)
-    expression<-fromJSON(req$mrna)
-    expression.without.gene.names.cols<-req$mrna[,2]
+    expression<- req$mrna
+    expression.without.gene.names.cols<-expression[,2]
     expression.without.gene.names.cols<-as.numeric(expression.without.gene.names.cols)
-    names(expression.without.gene.names.cols)<-req$mrna[,1]
+    names(expression.without.gene.names.cols)<-expression[,1]
     exp.ordered=expression.without.gene.names.cols[order(names(expression.without.gene.names.cols))]
     new=cbind(exp.ordered,exp.ordered)
     read=readRDS(paste(req$id, ".rds", sep=""))
     group.predicted<-pamr.predict(read, new, threshold=1)[1]
-    return (groupLabelsAsJson[as.numeric(group.predicted),2])
+    return (group.labels[as.numeric(group.predicted),2])
 
     
     

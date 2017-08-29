@@ -1,3 +1,2 @@
-  library(jsonlite)
-  library(pamr)
-    library(pamr)
+install.packages('jsonlite')
+install.packages('pamr')
