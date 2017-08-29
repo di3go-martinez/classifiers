@@ -9,7 +9,7 @@ public interface FunctionsService {
 
     List<ClassifierFunctionDescriptor> findAll();
 
-    ClassifierFunctionDescriptor create(String author, String name,  Set<String> genes);
+    ClassifierFunctionDescriptor create(String author, String name,  String datasetJson, String groupsJson, String groupLabelsJson);
 
     List<ClassifierFunctionDescriptor> findByAuthor(String author);
 }

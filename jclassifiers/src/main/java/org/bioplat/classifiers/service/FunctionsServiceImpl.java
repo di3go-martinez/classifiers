@@ -20,8 +20,8 @@ public class FunctionsServiceImpl implements FunctionsService {
     }
 
     @Override
-    public ClassifierFunctionDescriptor create(String author, String name, Set<String> genes) {
-        return functionsRepository.save(new ClassifierFunctionDescriptor(author, name, genes));
+    public ClassifierFunctionDescriptor create(String author, String name, String datasetJson, String groupsJson, String groupLabelsJson) {
+        return functionsRepository.save(new ClassifierFunctionDescriptor(author, name, datasetJson, groupsJson, groupLabelsJson));
     }
 
     @Override
