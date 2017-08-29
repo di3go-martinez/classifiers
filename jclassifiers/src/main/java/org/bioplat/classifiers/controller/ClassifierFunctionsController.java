@@ -31,16 +31,15 @@ public class ClassifierFunctionsController {
     private RService rService;
 
 
-
     @GetMapping("/functions")
-    public List<ClassifierFunctionDescriptor> findByAuthor(@RequestParam String author){
+    public List<ClassifierFunctionDescriptor> findByAuthor(@RequestParam String author) {
         return functionsService.findByAuthor(author);
     }
 
     @PostMapping("/functions")
-    public ClassifierFunctionDescriptor create(@RequestParam String author, @RequestParam String name, @RequestParam String genes) {
-        Iterable<String> genesAsIterable = Splitter.on(",").trimResults().split(genes);
-        ClassifierFunctionDescriptor result = functionsService.create(author, name, Sets.newHashSet( genesAsIterable));
+    public ClassifierFunctionDescriptor create(@RequestParam String author, @RequestParam String name,
+                                               @RequestParam String expressionAsJson, @RequestParam String groupsAsJson, @RequestParam String groupLabelsAsJson) {
+        ClassifierFunctionDescriptor result = functionsService.create(author, name, expressionAsJson, groupsAsJson,groupLabelsAsJson);
         rService.create(result);
         return result;
     }
@@ -48,17 +47,10 @@ public class ClassifierFunctionsController {
 
     //post por el tamaño del request sino sería GET
     @PostMapping("/functions/{function}")
-    public String eval(@PathVariable ClassifierFunctionDescriptor function, @RequestParam String names, @RequestParam("values") String valuesstr) {
-        Map<String, Number> values = rebuildParams(names, valuesstr);
-        return rService.eval(function, values);
+    public String eval(@PathVariable ClassifierFunctionDescriptor function, @RequestParam String mrna ) {
+        return rService.eval(function, mrna);
     }
 
-
-    private Map<String, Number> rebuildParams(String names, String values) {
-        final List<String> thenames = getThenames(names);
-        final List<Double> thevalues = getTheValues(values);
-        return combine(thenames, thevalues);
-    }
 
     private Map<String, Number> combine(List<String> thenames, List<Double> thevalues) {
         Map<String, Number> result = Maps.newHashMap();

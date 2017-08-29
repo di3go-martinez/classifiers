@@ -1,20 +1,16 @@
 package org.bioplat.classifiers.model;
 
-import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.*;
-import java.util.Set;
 
+//FIXME subclasificar en predefinidas y las originadas disnámicamente.
 @Entity
 @SequenceGenerator(name = "seq_function_resource")
 public class ClassifierFunctionDescriptor {
-
-    //TODO guardar colección, hecho así por simplicidad en el mapeo
-    private String geneNamesCommaSeparated;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_function_resource")
@@ -23,7 +19,17 @@ public class ClassifierFunctionDescriptor {
     @NotEmpty
     private String author;
 
+    @NotEmpty
     private String name;
+
+    @Lob
+    private String expressionAsJson;
+
+    @Lob
+    private String groupsAsJson;
+
+    private String groupLabelsAsJson;
+
 
     //los clasificadores predefinidos tiene un id, los creados no (tiene esta prop en null)
     private String idClassifier = null;
@@ -32,10 +38,12 @@ public class ClassifierFunctionDescriptor {
     private ClassifierFunctionDescriptor() {
     }
 
-    public ClassifierFunctionDescriptor(String author, String name, Set<String> geneNames) {
+    public ClassifierFunctionDescriptor(String author, String name, String expressionAsJson, String groupsAsJson, String groupLabelsAsJson) {
         this.author = author;
         this.name = name;
-        this.geneNamesCommaSeparated = Joiner.on(",").join(geneNames);
+        this.expressionAsJson = expressionAsJson;
+        this.groupsAsJson = groupsAsJson;
+        this.groupLabelsAsJson = groupLabelsAsJson;
     }
 
     //por ahora se crean en la base de datos directamente...
@@ -50,10 +58,6 @@ public class ClassifierFunctionDescriptor {
 
     public String author() {
         return author;
-    }
-
-    public String genesAsString() {
-        return geneNamesCommaSeparated;
     }
 
     public String resourceId() {
@@ -86,4 +90,16 @@ public class ClassifierFunctionDescriptor {
     }
 
     private static final Logger logger = LoggerFactory.getLogger(ClassifierFunctionDescriptor.class);
+
+    public String expressionAsJson() {
+        return expressionAsJson;
+    }
+
+    public String groupsAsJson() {
+        return groupsAsJson;
+    }
+
+    public String groupLabelsAsJson() {
+        return groupLabelsAsJson;
+    }
 }
