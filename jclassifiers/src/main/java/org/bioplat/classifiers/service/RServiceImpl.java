@@ -29,6 +29,7 @@ public class RServiceImpl implements RService {
             logger.warn("la función " + f + " está predefinida en R");
             return;
         }
+        logger.info("Creating the classifier "+f);
         //hace la llamada rest a r que crea una funcion y la expone dinámicamente
         try {
             Content content = Request.Post(urlRservice() + "/functions")
@@ -68,7 +69,6 @@ public class RServiceImpl implements RService {
         } catch (IOException e) {
             throw new RuntimeException("Error invocando a la función " + function, e);
         }
-
     }
 
     private HttpEntity prepareEvaluationParams(ClassifierFunctionDescriptor f, String mrna) throws UnsupportedEncodingException {
