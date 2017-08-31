@@ -1,9 +1,5 @@
 package org.bioplat.classifiers.controller;
 
-import com.google.common.base.Splitter;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import org.bioplat.classifiers.controller.result.EvaluationResult;
 import org.bioplat.classifiers.model.ClassifierFunctionDescriptor;
 import org.bioplat.classifiers.service.FunctionsService;
@@ -13,11 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
 
 @RestController
 public class ClassifierFunctionsController {

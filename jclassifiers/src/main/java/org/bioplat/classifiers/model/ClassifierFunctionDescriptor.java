@@ -62,6 +62,8 @@ public class ClassifierFunctionDescriptor {
         return author;
     }
 
+    public String name() { return name; }
+
     public String resourceId() {
         if (idClassifier == null)
             return id.toString();
@@ -73,6 +75,7 @@ public class ClassifierFunctionDescriptor {
     public Boolean isPredefined(){
         return idClassifier != null;
     }
+
 
     @Override
     public String toString() {
@@ -110,4 +113,5 @@ public class ClassifierFunctionDescriptor {
     public String groupLabelsAsJson() {
         return groupLabelsAsJson;
     }
+
 }

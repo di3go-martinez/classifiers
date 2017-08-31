@@ -62,7 +62,7 @@ public class RServiceImpl implements RService {
             Content requestresult = Request.Post(urlRservice() + "/" + function.resourceId())
                     .body(prepareEvaluationParams(function, mrna))
                     .execute().returnContent();
-            String result = "Resultado de la invocación a la función " + function.id() + ": " + requestresult.asString();
+            String result = "Resultado de la invocación a la función " + function.name() + ": " + requestresult.asString();
             logger.info(result);
             return result;
         } catch (IOException e) {
