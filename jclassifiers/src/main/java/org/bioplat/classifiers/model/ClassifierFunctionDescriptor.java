@@ -1,5 +1,7 @@
 package org.bioplat.classifiers.model;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Preconditions;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.slf4j.Logger;
@@ -67,6 +69,7 @@ public class ClassifierFunctionDescriptor {
             return idClassifier;
     }
 
+    @JsonIgnore
     public Boolean isPredefined(){
         return idClassifier != null;
     }
@@ -85,9 +88,14 @@ public class ClassifierFunctionDescriptor {
         return author;
     }
 
-    public String getResourseId(){
+    public String getResourceId(){
         return "/"+resourceId();
     }
+
+    public Long getId() {
+        return id();
+    }
+//fin capa dto
 
     private static final Logger logger = LoggerFactory.getLogger(ClassifierFunctionDescriptor.class);
 

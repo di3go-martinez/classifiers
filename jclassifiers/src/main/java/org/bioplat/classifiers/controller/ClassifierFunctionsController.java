@@ -4,6 +4,7 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import org.bioplat.classifiers.controller.result.EvaluationResult;
 import org.bioplat.classifiers.model.ClassifierFunctionDescriptor;
 import org.bioplat.classifiers.service.FunctionsService;
 import org.bioplat.classifiers.service.RService;
@@ -47,32 +48,10 @@ public class ClassifierFunctionsController {
 
     //post por el tamaño del request sino sería GET
     @PostMapping("/functions/{function}")
-    public String eval(@PathVariable ClassifierFunctionDescriptor function, @RequestParam String mrna ) {
-        return rService.eval(function, mrna);
+    public EvaluationResult eval(@PathVariable ClassifierFunctionDescriptor function, @RequestParam String mrna ) {
+        String message = rService.eval(function, mrna);
+        return new EvaluationResult(message);
     }
 
 
-    private Map<String, Number> combine(List<String> thenames, List<Double> thevalues) {
-        Map<String, Number> result = Maps.newHashMap();
-        Iterator<String> i1 = thenames.iterator();
-        Iterator<Double> i2 = thevalues.iterator();
-        while (i1.hasNext() || i2.hasNext()) result.put(i1.next(), i2.next());
-
-        return result;
-    }
-
-    private ArrayList<String> getThenames(String names) {
-        return Lists.newArrayList(Splitter.on(",").trimResults().split(names));
-    }
-
-    private List<Double> getTheValues(String values) {
-        final List<Double> thevalues = Lists.newArrayList();
-        Splitter.on(",").trimResults().split(values).forEach(new Consumer<String>() {
-            @Override
-            public void accept(String s) {
-                thevalues.add(Double.valueOf(s));
-            }
-        });
-        return thevalues;
-    }
 }

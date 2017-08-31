@@ -15,7 +15,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
-version = '0.0.2-SNAPSHOT'
+version = '0.0.12-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
@@ -45,5 +45,5 @@ bootRun {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.5'
+    gradleVersion = '4.1'
 }

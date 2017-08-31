@@ -5,3 +5,8 @@ spring.datasource.username: sa
 spring.datasource.password:
 spring.datasource.driverClassName: org.h2.Driver
 spring.jpa.hibernate.ddl-auto: validate
+
+# Max file size.
+spring.http.multipart.max-file-size: 1Mb
+# Max request size.
+spring.http.multipart.max-request-size: 10Mb
