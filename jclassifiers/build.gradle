@@ -15,7 +15,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
-version = '0.0.15'
+version = '0.0.16'
 sourceCompatibility = 1.8
 
 repositories {
@@ -28,6 +28,9 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 
 	runtime 'org.springframework.boot:spring-boot-devtools'
+	runtime 'org.springframework.boot:spring-boot-starter-actuator'
+	//runtime 'org.springframework.boot:spring-boot-starter-security'
+
 	runtime group: 'com.h2database', name: 'h2'
 
     compile 'org.apache.httpcomponents:httpclient:4.5.3'
@@ -36,6 +39,7 @@ dependencies {
     compile 'com.google.guava:guava:21.0'
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+
 }
 
 
