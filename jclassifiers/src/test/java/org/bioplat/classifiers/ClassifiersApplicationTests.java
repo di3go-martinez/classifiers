@@ -1,5 +1,6 @@
 package org.bioplat.classifiers;
 
+import org.bioplat.classifiers.service.Profiles;
 import org.bioplat.classifiers.service.RClassifier;
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ActiveProfiles("testing")
+@ActiveProfiles(Profiles.unit_testing)
 public class ClassifiersApplicationTests {
 
 	@MockBean
