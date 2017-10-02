@@ -1,4 +1,13 @@
 package org.bioplat.classifiers;
 
-public class AbstractTest {
+import org.bioplat.classifiers.service.Profiles;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@ActiveProfiles(Profiles.unit_testing)
+public abstract class AbstractTest {
 }
