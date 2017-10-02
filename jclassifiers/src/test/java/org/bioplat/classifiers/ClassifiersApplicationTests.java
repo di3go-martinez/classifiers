@@ -13,10 +13,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@ActiveProfiles(Profiles.unit_testing)
-public class ClassifiersApplicationTests {
+
+public class ClassifiersApplicationTests extends AbstractTest {
 
 	@MockBean
 	private RClassifier rClassifier;

@@ -10,6 +10,7 @@ import org.apache.http.client.fluent.Request;
 import org.apache.http.message.BasicNameValuePair;
 import org.bioplat.classifiers.model.ClassifierFunctionDescriptor;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -42,10 +43,10 @@ public class RClassifier {
         }
     }
 
-    private List<? extends NameValuePair> prepareCreationParams(ClassifierFunctionDescriptor f) {
+    List<? extends NameValuePair> prepareCreationParams(ClassifierFunctionDescriptor f) {
         List<NameValuePair> result = Lists.newArrayList();
         result.add(new BasicNameValuePair("id", f.id().toString()));
-        //result.add(new BasicNameValuePair("author", f.author()));
+        result.add(new BasicNameValuePair("author", f.author()));
 
         result.add(new BasicNameValuePair("expressionAsJson", f.expressionAsJson()));
         result.add(new BasicNameValuePair("groupsAsJson", f.groupsAsJson()));
