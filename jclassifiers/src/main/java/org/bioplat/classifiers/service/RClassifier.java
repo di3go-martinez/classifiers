@@ -46,7 +46,7 @@ public class RClassifier {
     List<? extends NameValuePair> prepareCreationParams(ClassifierFunctionDescriptor f) {
         List<NameValuePair> result = Lists.newArrayList();
         result.add(new BasicNameValuePair("id", f.id().toString()));
-        //result.add(new BasicNameValuePair("author", f.author()));
+        result.add(new BasicNameValuePair("author", f.author()));
 
         result.add(new BasicNameValuePair("expressionAsJson", f.expressionAsJson()));
         result.add(new BasicNameValuePair("groupsAsJson", f.groupsAsJson()));
