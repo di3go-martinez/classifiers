@@ -13,10 +13,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@ActiveProfiles("testing")
-public class FunctionTest {
+public class FunctionTest extends AbstractTest{
 
     @MockBean
     private RClassifier rClassifier;
