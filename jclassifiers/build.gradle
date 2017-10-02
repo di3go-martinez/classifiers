@@ -15,7 +15,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
-version = '0.0.16'
+version = '0.0.17'
 sourceCompatibility = 1.8
 
 repositories {
@@ -36,6 +36,7 @@ dependencies {
     compile 'org.apache.httpcomponents:httpclient:4.5.3'
     compile 'org.apache.httpcomponents:fluent-hc:4.5.3'
 
+	compile 'com.fasterxml.jackson.core:jackson-annotations'
     compile 'com.google.guava:guava:21.0'
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
