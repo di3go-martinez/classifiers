@@ -2,12 +2,14 @@ package org.bioplat.classifiers;
 
 import org.bioplat.classifiers.model.ClassifierFunctionDescriptor;
 import org.bioplat.classifiers.repository.FunctionsRepository;
+import org.bioplat.classifiers.service.RClassifier;
 import org.bioplat.classifiers.service.RService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -15,6 +17,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 @ActiveProfiles("testing")
 public class FunctionTest {
+
+    @MockBean
+    private RClassifier rClassifier;
 
     @Autowired
     private FunctionsRepository functionsRepository;
