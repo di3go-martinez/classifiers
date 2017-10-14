@@ -9,17 +9,19 @@ buildscript {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
 	}
 }
-
+apply from: 'repositories.gradle'
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
+apply from: 'publishing.gradle'
 
-version = '0.0.19'
+version = '0.0.19-rc1'
 sourceCompatibility = 1.8
 
 repositories {
 	mavenCentral()
+  bioplatRepository()
 }
 
 
@@ -33,11 +35,11 @@ dependencies {
 
 	runtime group: 'com.h2database', name: 'h2'
 
-    compile 'org.apache.httpcomponents:httpclient:4.5.3'
-    compile 'org.apache.httpcomponents:fluent-hc:4.5.3'
+  compile 'org.apache.httpcomponents:httpclient:4.5.3'
+  compile 'org.apache.httpcomponents:fluent-hc:4.5.3'
 
 	compile 'com.fasterxml.jackson.core:jackson-annotations'
-    compile 'com.google.guava:guava:23.0'
+  compile 'com.google.guava:guava:23.0'
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 
@@ -50,5 +52,5 @@ bootRun {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.2'
+    gradleVersion = '4.2.1'
 }

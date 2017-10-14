@@ -1,0 +1,27 @@
+apply plugin: 'maven-publish'
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+}
+
+publishing {
+  repositories{
+    maven{    
+      //TODO bioplatRepository()
+      url "http://192.155.227.67:8081/nexus/content/repositories/bioplat-release-candidates/"
+        credentials() {
+          username "deployment"
+            password "Deployment.1"
+        }
+    }
+  }
+  publications {
+    mavenJava(MavenPublication) {
+      from components.java
+
+        artifact sourceJar {
+          classifier "sources"
+        }
+    }
+  }
+}
