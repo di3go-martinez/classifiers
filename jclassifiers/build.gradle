@@ -1,6 +1,7 @@
 buildscript {
  ext {
   springBootVersion = '1.5.7.RELEASE'
+  deploymentPassword=project.properties['deploymentPassword'] ?: "no_pass_provided"
  }
  repositories {
   mavenCentral()
@@ -21,7 +22,7 @@ sourceCompatibility = 1.8
 
 repositories {
  mavenCentral()
-  bioplatRepository()
+ bioplatRepository()
 }
 
 dependencies {
