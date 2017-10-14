@@ -6,13 +6,13 @@ task sourceJar(type: Jar) {
 
 publishing {
   repositories{
+    //TODO  bioplatRepository()
     maven{    
-      //TODO bioplatRepository()
       url "http://192.155.227.67:8081/nexus/content/repositories/bioplat-release-candidates/"
         credentials() {
           username "deployment"
-            password "Deployment.1"
-        }
+          password deploymentPassword
+       }
     }
   }
   publications {
