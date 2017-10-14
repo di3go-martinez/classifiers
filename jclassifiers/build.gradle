@@ -53,3 +53,7 @@ bootRun {
 task wrapper(type: Wrapper) {
     gradleVersion = '4.2.1'
 }
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+}
