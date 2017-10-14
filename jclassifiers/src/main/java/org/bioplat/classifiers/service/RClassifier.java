@@ -47,14 +47,13 @@ public class RClassifier {
         List<NameValuePair> result = Lists.newArrayList();
         result.add(new BasicNameValuePair("id", f.id().toString()));
         result.add(new BasicNameValuePair("author", f.author()));
-
         result.add(new BasicNameValuePair("expressionAsJson", f.expressionAsJson()));
         result.add(new BasicNameValuePair("groupsAsJson", f.groupsAsJson()));
         result.add(new BasicNameValuePair("groupLabelsAsJson", f.groupLabelsAsJson()));
         return result;
     }
 
-
+//TODO externalizar esto en el applicatoin.yml. hacer clase de configuración
     private String urlRservice() {
         return System.getProperty("rservice.url", "http://localhost:8000");
     }
