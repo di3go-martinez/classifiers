@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.5.7.RELEASE'
+        springBootVersion = '1.5.8.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -40,6 +40,7 @@ dependencies {
     compile 'org.apache.httpcomponents:fluent-hc:4.5.3'
 
     compile 'com.fasterxml.jackson.core:jackson-annotations'
+    compile 'com.google.code.gson:gson:2.8.2'
     compile 'com.google.guava:guava:23.0'
 
     testCompile 'org.springframework.boot:spring-boot-starter-test'
@@ -53,6 +54,6 @@ bootRun {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.1'
+    gradleVersion = '4.2.1'
 }
 
