@@ -10,13 +10,11 @@ import org.apache.http.client.fluent.Request;
 import org.apache.http.message.BasicNameValuePair;
 import org.bioplat.classifiers.model.ClassifierFunctionDescriptor;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * Realiza las invocaciones HTTP API al servicio de R (rclassifiers)
