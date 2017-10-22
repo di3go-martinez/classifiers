@@ -1,7 +1,12 @@
 package org.bioplat.classifiers;
 
+import com.google.gson.Gson;
 import org.bioplat.classifiers.model.ClassifierFunctionDescriptor;
+import org.bioplat.classifiers.model.GeneReference;
 import org.bioplat.classifiers.repository.FunctionsRepository;
+import org.bioplat.classifiers.repository.GeneReferencesRepository;
+import org.bioplat.classifiers.service.FunctionsService;
+import org.bioplat.classifiers.service.FunctionsServiceImpl;
 import org.bioplat.classifiers.service.RClassifier;
 import org.bioplat.classifiers.service.RService;
 import org.junit.Assert;
@@ -13,7 +18,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-public class FunctionTest extends AbstractTest{
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+public class FunctionTest extends AbstractTest {
 
     @MockBean
     private RClassifier rClassifier;
@@ -30,16 +39,38 @@ public class FunctionTest extends AbstractTest{
     private String clusterLabels =
             "[{\"group\":1,\"descripcion\":\"alto riesgo. Se sugiere bla bla\"},{\"group\":2,\"descripcion\":\"bajo riesgo. Se sugiere blo blao\"}]";
 
+
+    @Autowired
+    private FunctionsServiceImpl functionsService;
+
     @Test
     public void creation() {
 
-        ClassifierFunctionDescriptor f = new ClassifierFunctionDescriptor("yo", "classifier1", dataset, clusters, clusterLabels);
+
+        ClassifierFunctionDescriptor f = new ClassifierFunctionDescriptor("yo", "classifier1", dataset, clusters, clusterLabels, extractGenes(dataset));
         f = functionsRepository.save(f);
-        ClassifierFunctionDescriptor f2 = new ClassifierFunctionDescriptor("yo también", "classifier2", dataset, clusters, clusterLabels);
+        ClassifierFunctionDescriptor f2 = new ClassifierFunctionDescriptor("yo también", "classifier2", dataset, clusters, clusterLabels, extractGenes(dataset));
         f2 = functionsRepository.save(f2);
 
         Assert.assertTrue(!f.id().equals(f2.id()));
 
 
+    }
+
+    @Autowired
+    private GeneReferencesRepository geneReferencesRepository;
+
+    private Set<GeneReference> extractGenes(String dataset) {
+        Gson gson = new Gson();
+        String[][] parseddataset = gson.fromJson(dataset, String[][].class);
+
+        return
+                Arrays.stream(parseddataset).map(e -> getGeneReference(e[0])).collect(Collectors.toSet());
+
+    }
+
+    private GeneReference getGeneReference(String name) {
+        GeneReference gr = geneReferencesRepository.findOne(name);
+        return (gr != null)? gr :geneReferencesRepository.save(new GeneReference(name));
     }
 }
