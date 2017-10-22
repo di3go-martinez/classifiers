@@ -1,15 +1,18 @@
 package org.bioplat.classifiers.model;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Sets;
+import com.google.gson.Gson;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.*;
+import java.util.Set;
 
-//FIXME subclasificar en predefinidas y las originadas disnámicamente.
+//FIXME subclasificar en predefinidas y las originadas dinámicamente.
 @Entity
 @SequenceGenerator(name = "seq_function_resource")
 public class ClassifierFunctionDescriptor {
@@ -32,6 +35,8 @@ public class ClassifierFunctionDescriptor {
 
     private String groupLabelsAsJson;
 
+    @ManyToMany
+    private Set<GeneReference> genes;
 
     //los clasificadores predefinidos tiene un id, los creados no (tiene esta prop en null)
     private String idClassifier = null;
@@ -40,15 +45,18 @@ public class ClassifierFunctionDescriptor {
     private ClassifierFunctionDescriptor() {
     }
 
-    public ClassifierFunctionDescriptor(String author, String name, String expressionAsJson, String groupsAsJson, String groupLabelsAsJson) {
+    //FIXME sacar strings, modelar!
+    public ClassifierFunctionDescriptor(String author, String name, String expressionAsJson, String groupsAsJson, String groupLabelsAsJson, Set<GeneReference> genes) {
         this.author = author;
         this.name = name;
         this.expressionAsJson = expressionAsJson;
+        this.genes = genes;
         this.groupsAsJson = groupsAsJson;
         this.groupLabelsAsJson = groupLabelsAsJson;
     }
 
-    //por ahora se crean en la base de datos directamente...
+
+    // Clasificadores predefinidos, ya creados en la base de datos
     public ClassifierFunctionDescriptor(String idClassifier) {
         Preconditions.checkNotNull(idClassifier);
         this.idClassifier = idClassifier;
@@ -82,24 +90,6 @@ public class ClassifierFunctionDescriptor {
         return name+" (by "+author()+")"+ " @"+resourceId();
     }
 
-    //para capa dto
-    public String getName() {
-        return name;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public String getResourceId(){
-        return "/"+resourceId();
-    }
-
-    public Long getId() {
-        return id();
-    }
-//fin capa dto
-
     private static final Logger logger = LoggerFactory.getLogger(ClassifierFunctionDescriptor.class);
 
     public String expressionAsJson() {
@@ -114,4 +104,7 @@ public class ClassifierFunctionDescriptor {
         return groupLabelsAsJson;
     }
 
+    public Set<GeneReference> genes() {
+        return this.genes;
+    }
 }

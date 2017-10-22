@@ -13,8 +13,8 @@ spring.http.multipart.max-request-size: 10Mb
 
 
 logging.level:
-  org.springframework.web: DEBUG
-  org.apache.tomcat: DEBUG
+  org.springframework.web: INFO
+  org.apache.tomcat: INFO
 
 #security.user.name: bioplat
 #security.user.password: Bi0plat
@@ -22,10 +22,23 @@ logging.level:
 management.security.enabled: false
 
 ---
-spring.profiles: production
-spring.datasource.url: jdbc:h2:./db/classifiers-db;DB_CLOSE_ON_EXIT=FALSE
-spring.jpa.hibernate.ddl-auto: validate
----
-spring.profiles: development
-spring.jpa.hibernate.ddl-auto: create-drop
 
+spring:
+  profiles: production
+  datasource.url: jdbc:h2:${classifiers.datasource.dbfile:./db/classifiers-db};DB_CLOSE_ON_EXIT=FALSE
+  jpa.hibernate.ddl-auto: validate
+liquibase:
+  user: ${spring.datasource.username}
+---
+
+spring:
+  profiles: development
+  jpa:
+    hibernate.ddl-auto: none
+    properties:
+      hibernate:
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true
+        type: trace
+liquibase.enabled: true

@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: 20171022-init.sql
+      relativeToChangelogFile: true
+  - include:
+      file: 20171022-default-data.sql
+      relativeToChangelogFile: true
