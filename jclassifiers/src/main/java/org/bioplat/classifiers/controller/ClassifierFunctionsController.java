@@ -34,7 +34,7 @@ public class ClassifierFunctionsController {
     @PostMapping("/functions")
     public ClassifierFunctionDescriptor create(@RequestParam String author, @RequestParam String name,
                                                @RequestParam String expressionAsJson, @RequestParam String groupsAsJson, @RequestParam String groupLabelsAsJson) {
-        ClassifierFunctionDescriptor result = functionsService.create(author, name, expressionAsJson, groupsAsJson,groupLabelsAsJson);
+        ClassifierFunctionDescriptor result = functionsService.create(author, name, expressionAsJson, groupsAsJson, groupLabelsAsJson);
         rService.create(result);
         return result;
     }
@@ -42,7 +42,7 @@ public class ClassifierFunctionsController {
 
     //post por el tamaño del request sino sería GET
     @PostMapping("/functions/{function}")
-    public EvaluationResult eval(@PathVariable ClassifierFunctionDescriptor function, @RequestParam String mrna ) {
+    public EvaluationResult eval(@PathVariable ClassifierFunctionDescriptor function, @RequestParam String mrna) {
         String message = rService.eval(function, mrna);
         return new EvaluationResult(message);
     }
