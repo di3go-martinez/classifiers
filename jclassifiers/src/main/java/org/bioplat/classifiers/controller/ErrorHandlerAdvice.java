@@ -1,5 +1,6 @@
 package org.bioplat.classifiers.controller;
 
+import org.bioplat.classifiers.controller.result.Error;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpRequest;
@@ -15,7 +16,8 @@ public class ErrorHandlerAdvice {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public void handleError( Throwable exception){
+    public Error handleError(Throwable exception){
         logger.error("Error evaluando request", exception);
+        return new Error(exception);
     }
 }
