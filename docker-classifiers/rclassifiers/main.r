@@ -19,10 +19,10 @@ function (req, id, author, mrna=NULL, res){
   plumber::forward()
 }
 
-#expressionAsJson es un json que serializa una matriz en la que la primera columna contiene los nombres de los genes y las demas columnas son los pacientes. Las celdas son datos de expresion.
+#expressionAsJson es un json que serializa una matriz en la que la primera columna contiene los nombres de los genes y las demas columnas son los pacientes (datos de expresion)
 #Ejemplo de expressionAsJson para una matriz de 4 pacientes y 2 genes: [["KRT17","-0.36","-0.34","-0.27","-0.51"],["FOXC1","-0.36","-0.4","-0.39","-0.45"]]
 #
-#groupsAsJson nombre del sample y grupo al que pertenece. GARANTIZAR QUE VIENEN EN EL MISMO ORDEN EN QUE ESTAN EXPRESADOAS LAS COLUMNAS DE LA MATRIZ DE EXPRESION!!
+#groupsAsJson nombre del sample y grupo al que pertenece. GARANTIZAR QUE VIENEN EN EL MISMO ORDEN EN QUE ESTAN EXPRESADOAS LAS COLUMNAS DE LA MATRIZ DE EXPRESION!!(el formato json no define orden, depende de la implementación)
 #Ejemplo de grupoAsJson para 4 pacientes:[{"sample":"sample1","grupo":1},{"sample":"sample2","grupo":2},{"sample":"sample3","grupo":2},{"sample":"sample4","grupo":2}]
 #
 #groupLabelsAsJson tiene la descripcion que el investigador le dio a cada grupo desde la GUI de bioplat al crear el clasificador desde una validacion.
