@@ -1,6 +1,6 @@
 #!/bin/bash 
 
-#copio jar+deps y la db
+#copio apps
 jar=$(ls jclassifiers/build/libs/jclassifiers-*.jar -tr | tail -n 1)
 echo "Deploying jclassifier $jar"
 cp $jar docker-classifiers/classifiers/classifiers.jar
