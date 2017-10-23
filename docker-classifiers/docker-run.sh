@@ -3,6 +3,7 @@
 docker run --rm --detach \
     -p 8080:8080 \
     --name classifiers-service \
+    --volumes-from classifiers-service-data \
     classifiers-service
 
 echo "^C para cortar el log sin salir del servicio" && sleep 5s
