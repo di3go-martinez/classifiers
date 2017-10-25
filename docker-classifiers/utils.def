@@ -1,0 +1,13 @@
+#!/bin/bash
+
+findVersion(){
+  local version=$(unzip -qc classifiers/classifiers.jar | grep -w ^Version | cut -d: -f2)
+
+  #trim
+  version=${version%% }
+  version=${version## }
+
+  version=$(echo $version | sed 's/\r$//')
+
+  echo $version
+}
