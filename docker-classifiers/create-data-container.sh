@@ -1,5 +1,7 @@
+#!/bin/bash
 
-docker run --entrypoint echo \
-           --name classifiers-service-data \
-           --volume /tmp/dbp/ \
+. utils.def
+
+docker run --entrypoint "echo" \
+           --name classifiers-service-data-$(findVersion) \
            classifiers-service data

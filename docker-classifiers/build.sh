@@ -1,3 +1,5 @@
 #!/bin/bash
 
-docker build -t classifiers-service .
+. utils.def
+
+docker build -t classifiers-service:$(findVersion) .
