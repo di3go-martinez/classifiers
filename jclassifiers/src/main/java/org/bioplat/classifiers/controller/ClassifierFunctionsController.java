@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 //TODO sacar String de los parámetros! modelar y utilizar Gson!
 @RestController
 @Transactional
+@CrossOrigin
 public class ClassifierFunctionsController {
 
     private static final Logger logger = LoggerFactory.getLogger(ClassifierFunctionsController.class);
