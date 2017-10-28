@@ -4,4 +4,4 @@
 
 docker run --entrypoint "echo" \
            --name classifiers-service-data-$(findVersion) \
-           classifiers-service data
+           classifiers-service:$(findVersion) data
