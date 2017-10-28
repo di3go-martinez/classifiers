@@ -29,3 +29,5 @@ gradlew
 gradlew.bat 
 out/
 .tmp/
+
+src/main/resources/static/
