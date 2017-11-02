@@ -1,4 +1,6 @@
 
 .classifier {
-  border: solid 1px;
+  border: solid black 1px;
+  height:50px;
+  background-color:lightgreen;
 }
