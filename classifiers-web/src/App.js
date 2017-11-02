@@ -7,10 +7,15 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {classifiers: []};
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentWillMount(){
-    fetch("http://localhost:8080/functions?author=di3go")
+    this.search("bioplat")
+  }
+
+  search(authorName){
+    fetch("http://localhost:8080/functions?author="+authorName)
       .then((response) => {
         if (!response.ok) {
           console.log(response);
@@ -23,6 +28,11 @@ class App extends Component {
       });
 
   }
+
+  handleSubmit(event){
+    event.preventDefault();
+    this.search (this.authorInput.value);
+  }
   
   render() {
     return (
@@ -30,6 +40,12 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Bioplat Classifiers</h1>
         </header>
+        <div className="search">
+        <form onSubmit={this.handleSubmit}>
+          <input type="text" ref={author => this.authorInput = author} placeholder="Author Name"/>
+          <input className="button" type="submit" value="search" />
+        </form>
+        </div>
         <div className="App-intro">
          <Classifier classifiers={this.state.classifiers}/>
         </div>
