@@ -59,5 +59,6 @@ task wrapper(type: Wrapper) {
 
 jar {
   manifest {
+    attributes 'Classifiers-Version': version
   }
 }
