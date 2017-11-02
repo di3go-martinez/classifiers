@@ -8,21 +8,30 @@
 }
 
 .App-header {
-  background-color: #333;
-  height: 150px;
-  padding: 20px;
+  background-color: blue;
+  height: 30px;
+  padding: 5px;
   color: white;
 }
 
 .App-title {
-  font-size: 1.5em;
+  font-size: 1.0em;
 }
 
 .App-intro {
   font-size: large;
+  background-color:blue;
 }
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.button {
+  color:green;
+}
+
+.search {
+  background-color:red;
 }
