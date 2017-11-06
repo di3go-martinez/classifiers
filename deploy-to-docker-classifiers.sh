@@ -3,8 +3,10 @@
 
 (cd classifiers-web && npm run build)
 
-rm -rf jclassifiers/src/main/resources/static
-mv classifiers-web/build jclassifiers/src/main/resources/static
+static_dir=jclassifiers/src/main/resources/static
+rm -rf $static_dir
+
+mv classifiers-web/build $static_dir
 
 (cd jclassifiers && ./gradlew build )
 
