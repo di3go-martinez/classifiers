@@ -1,7 +1,7 @@
 #!/bin/bash 
 
-
-(cd classifiers-web && npm run build)
+#FIXME parametrizar bien el server!
+(cd classifiers-web && sed -i "s/localhost\:8080/$server/g" src/App.js && npm run build)
 
 static_dir=jclassifiers/src/main/resources/static
 rm -rf $static_dir
