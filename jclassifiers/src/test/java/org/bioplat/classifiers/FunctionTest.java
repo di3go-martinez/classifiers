@@ -22,6 +22,8 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static java.util.Arrays.stream;
+
 public class FunctionTest extends AbstractTest {
 
     @MockBean
@@ -41,7 +43,7 @@ public class FunctionTest extends AbstractTest {
 
 
     @Autowired
-    private FunctionsServiceImpl functionsService;
+    private FunctionsService functionsService;
 
     @Test
     public void creation() {
@@ -64,13 +66,17 @@ public class FunctionTest extends AbstractTest {
         Gson gson = new Gson();
         String[][] parseddataset = gson.fromJson(dataset, String[][].class);
 
-        return
-                Arrays.stream(parseddataset).map(e -> getGeneReference(e[0])).collect(Collectors.toSet());
+        return stream(parseddataset)
+                    .map(e -> getGeneReference(e[0]))
+                    .collect(Collectors.toSet());
 
     }
 
     private GeneReference getGeneReference(String name) {
         GeneReference gr = geneReferencesRepository.findOne(name);
-        return (gr != null)? gr :geneReferencesRepository.save(new GeneReference(name));
+        return (gr != null) ? gr : geneReferencesRepository.save(new GeneReference(name));
     }
+
+
+
 }
