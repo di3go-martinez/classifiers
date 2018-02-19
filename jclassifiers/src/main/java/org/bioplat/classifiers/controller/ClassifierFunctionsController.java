@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import org.bioplat.classifiers.controller.result.ClassifierResult;
 import org.bioplat.classifiers.controller.result.EvaluationResult;
 import org.bioplat.classifiers.model.ClassifierFunctionDescriptor;
+import org.bioplat.classifiers.model.Mrna;
 import org.bioplat.classifiers.service.FunctionsService;
 import org.bioplat.classifiers.service.RService;
 import org.slf4j.Logger;
@@ -18,11 +19,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-//TODO sacar String de los parámetros! modelar y utilizar Gson!
-//TODO sacar String de los parámetros! modelar y utilizar Gson!
-//TODO sacar String de los parámetros! modelar y utilizar Gson!
-//TODO sacar String de los parámetros! modelar y utilizar Gson!
-//TODO sacar String de los parámetros! modelar y utilizar Gson!
+//TODO sacar Strings de los parámetros! modelar y utilizar Gson!
+//TODO sacar Strings de los parámetros! modelar y utilizar Gson!
+//TODO sacar Strings de los parámetros! modelar y utilizar Gson!
+//TODO sacar Strings de los parámetros! modelar y utilizar Gson!
+//TODO sacar Strings de los parámetros! modelar y utilizar Gson!
 @RestController
 @Transactional
 @CrossOrigin
@@ -55,8 +56,9 @@ public class ClassifierFunctionsController {
 
     //POST por el tamaño del request sino sería GET
     @PostMapping("/functions/{function}")
-    public EvaluationResult eval(@PathVariable ClassifierFunctionDescriptor function, @RequestParam String mrna) {
-        String message = rService.eval(function, mrna);
+    public EvaluationResult eval(@PathVariable ClassifierFunctionDescriptor function, @RequestParam("mrna") String mrnaAsString) {
+        Mrna mrna = Mrna.parse(mrnaAsString).filter(function.genes());
+        String message = rService.eval(function, mrna.toJson());
         return new EvaluationResult(message);
     }
 
