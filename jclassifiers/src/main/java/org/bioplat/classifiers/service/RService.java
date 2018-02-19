@@ -2,8 +2,6 @@ package org.bioplat.classifiers.service;
 
 import org.bioplat.classifiers.model.ClassifierFunctionDescriptor;
 
-import java.util.Map;
-
 /**
  * Accede al servidor R, crendo y evaluando las funciones clasificadores en
  */
