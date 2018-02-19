@@ -16,7 +16,7 @@ apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply from: 'publishing.gradle'
 
-version = '0.1.1'
+version = '0.1.2'
 sourceCompatibility = 1.8
 
 repositories {
