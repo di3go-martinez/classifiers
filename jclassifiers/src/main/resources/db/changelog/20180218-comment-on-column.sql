@@ -1,0 +1,1 @@
+comment on column classifier_function_descriptor_genes.genes_name is 'Esta columna representa el nombre de un gen (el cual es clave )';
