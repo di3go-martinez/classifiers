@@ -1,5 +1,8 @@
 #!/bin/bash 
 
+
+: ${server?"environment var server is not defined"}
+
 #FIXME parametrizar bien el server!
 (cd classifiers-web && sed -i "s/localhost\:8080/$server/g" src/App.js && npm run build)
 
