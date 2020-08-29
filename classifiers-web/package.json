@@ -1,13 +1,14 @@
 {
   "name": "classifiers-web",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "dependencies": {
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "react-scripts": "1.0.14"
   },
   "scripts": {
+    "pre-start": "npx install-if-needed",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
